@@ -1,0 +1,41 @@
+# Unity 자동 생성 캐시 및 임시 파일
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+
+# 사용자 개인 에디터 설정
+[Uu]ser[Ss]ettings/
+
+# IDE 자동 생성 파일 (Unity가 재생성함)
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.VC.db
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider
+.idea/
+
+# Visual Studio / Visual Studio Code
+.vscode/
+.vs/
+
+# Claude Code 로컬 설정
+.claude/
+
+# Backup 파일
+*.bak
+*.tmp
