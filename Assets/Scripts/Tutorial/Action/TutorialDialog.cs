@@ -6,6 +6,10 @@ public class TutorialDialog : TutorialAction
 {
     [SerializeField] private string _dialogText;
 
+    public TutorialDialog(TutorialActionData data)
+    {
+    }
+
     public override void Start()
     {
         if (Manager.UI == null)

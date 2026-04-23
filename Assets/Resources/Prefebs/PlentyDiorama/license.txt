@@ -1,0 +1,11 @@
+Model Information:
+* title:	Isle of Plenty Diorama
+* source:	https://sketchfab.com/3d-models/isle-of-plenty-diorama-2c90af7d928b42ff967025e9424eaa71
+* author:	nadiiaplaunova (https://sketchfab.com/nadiiaplaunova)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Isle of Plenty Diorama" (https://sketchfab.com/3d-models/isle-of-plenty-diorama-2c90af7d928b42ff967025e9424eaa71) by nadiiaplaunova (https://sketchfab.com/nadiiaplaunova) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

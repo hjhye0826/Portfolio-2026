@@ -8,6 +8,10 @@ public class TutorialTouch : TutorialAction
 
     private Camera _camera;
 
+    public TutorialTouch(TutorialActionData data)
+    {
+    }
+
     public override void Start()
     {
         _camera = Camera.main;

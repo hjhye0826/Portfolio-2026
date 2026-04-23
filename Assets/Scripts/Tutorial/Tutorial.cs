@@ -2,29 +2,35 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Linq;
+
 [Serializable]
 public class Tutorial
 {
-    [SerializeField] private float _triggerTime;
-    [SerializeField] private List<TutorialStep> _steps = new();
+    public float triggerTime => Data.triggerTime;
 
-    public float triggerTime => _triggerTime;
     public bool IsCompleted { get; private set; }
     public bool IsRunning { get; private set; }
 
+    public TutorialData Data { get; private set; }
     private List<TutorialAction> _currentActions;
     private int _currentStepIndex;
 
-    public void Start()
+    public Tutorial(TutorialData data, List<TutorialActionData> actions)
     {
-        if (_steps.Count == 0)
-        {
-            IsCompleted = true;
-            return;
-        }
+        Data = data;
 
+        _currentActions = actions
+            .OrderBy(d => d.step)
+            .Select(d => CreateTutorialAction(d))
+            .ToList();
+    }
+
+    public void StartTutorial()
+    {
         IsRunning = true;
         _currentStepIndex = 0;
+
         StartStep(0);
     }
 
@@ -53,7 +59,7 @@ public class Tutorial
 
     private void StartStep(int index)
     {
-        _currentActions = _steps[index].actions;
+        //_currentActions = _steps[index].actions;
         foreach (var action in _currentActions)
             action.Start();
     }
@@ -67,12 +73,24 @@ public class Tutorial
     private void AdvanceStep()
     {
         _currentStepIndex++;
-        if (_currentStepIndex >= _steps.Count)
-        {
-            IsRunning = false;
-            IsCompleted = true;
-            return;
-        }
+        //if (_currentStepIndex >= _steps.Count)
+        //{
+        //    IsRunning = false;
+        //    IsCompleted = true;
+        //    return;
+        //}
+
         StartStep(_currentStepIndex);
+    }
+
+    private TutorialAction CreateTutorialAction(TutorialActionData data)
+    {
+        return data.actionType switch
+        {
+            ActionType.Dialog => new TutorialDialog(data),
+            ActionType.WaitTime => new TutorialWaitTime(data),
+            ActionType.Touch => new TutorialTouch(data),
+            _ => throw new ArgumentException($"Unknown ActionType: {data.actionType}")
+        };
     }
 }

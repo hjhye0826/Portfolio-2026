@@ -7,6 +7,7 @@ public class Manager : MonoBehaviour
     public static UIManager UI { get; private set; }
     public static GameManager Game { get; private set; }
 
+
     private void Awake()
     {
         if (Instance != null)
@@ -20,5 +21,12 @@ public class Manager : MonoBehaviour
 
         UI = new UIManager();
         Game = new GameManager();
+    }
+
+    private void Update()
+    {
+        var deltaTime = Time.deltaTime;
+
+        Game.Progress(deltaTime);
     }
 }

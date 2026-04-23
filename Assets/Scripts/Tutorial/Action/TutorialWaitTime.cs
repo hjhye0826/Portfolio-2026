@@ -8,6 +8,10 @@ public class TutorialWaitTime : TutorialAction
 
     private float _elapsed;
 
+    public TutorialWaitTime(TutorialActionData data)
+    {
+    }
+
     public override void Start()
     {
         _elapsed = 0f;
