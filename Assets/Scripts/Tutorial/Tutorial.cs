@@ -8,79 +8,103 @@ using System.Linq;
 public class Tutorial
 {
     public float triggerTime => Data.triggerTime;
+    public string ErrorString { get; protected set; } = "";
 
     public bool IsCompleted { get; private set; }
     public bool IsRunning { get; private set; }
 
     public TutorialData Data { get; private set; }
+
+    private List<TutorialActionData> _actions;
     private List<TutorialAction> _currentActions;
-    private int _currentStepIndex;
+
+    private int _lastStep;
+    private int _currentStep;
 
     public Tutorial(TutorialData data, List<TutorialActionData> actions)
     {
         Data = data;
 
-        _currentActions = actions
-            .OrderBy(d => d.step)
-            .Select(d => CreateTutorialAction(d))
-            .ToList();
+        _actions = actions;
+        _lastStep = actions.Last().step;
     }
 
     public void StartTutorial()
     {
+        Debug.Log($"Start Tutorial : {Data.id}");
+        Manager.Game.Pause();
+        Manager.UI.Show<Popup_Tutorial>();
+
         IsRunning = true;
-        _currentStepIndex = 0;
+        _currentStep = 0;
 
         StartStep(0);
     }
 
-    public void Update()
+    public void CompeleteTutorial()
     {
+        IsCompleted = true;
+        
+        EndTutorial();
+    }
+
+    public void EndTutorial()
+    {
+        IsRunning = false;
+
+        Manager.Game.Resume();
+        Manager.UI.Hide<Popup_Tutorial>();
+    }
+
+    public void Progress()
+    {
+        var completedCount = 0;
         foreach (var action in _currentActions)
         {
-            if (!action.IsCompleted)
-                action.OnProcess();
+            if(action.IsCompleted)
+            {
+                completedCount++;
+                continue;
+            }
+            
+            action.OnProcess();
+
+            if (action.ErrorString != "")
+            {
+                ErrorString = action.ErrorString;
+                EndTutorial();
+                return;
+            }
         }
 
-        foreach (var action in _currentActions)
+        if(completedCount == _currentActions.Count)
         {
-            if (action.errorString == "") continue;
-            EndCurrentStep();
-            IsRunning = false;
-            return;
-        }
-
-        if (_currentActions.TrueForAll(a => a.IsCompleted))
-        {
-            EndCurrentStep();
             AdvanceStep();
         }
     }
 
-    private void StartStep(int index)
+    private void StartStep(int step)
     {
-        //_currentActions = _steps[index].actions;
+        _currentActions = _actions
+            .Where(d => d.step == step)
+            .Select(d => CreateTutorialAction(d))
+            .ToList();
+
         foreach (var action in _currentActions)
-            action.Start();
+            action.StartAction();
     }
 
-    private void EndCurrentStep()
-    {
-        foreach (var action in _currentActions)
-            action.End();
-    }
 
     private void AdvanceStep()
     {
-        _currentStepIndex++;
-        //if (_currentStepIndex >= _steps.Count)
-        //{
-        //    IsRunning = false;
-        //    IsCompleted = true;
-        //    return;
-        //}
+        _currentStep++;
+        if (_currentStep > _lastStep)
+        {
+            CompeleteTutorial();
+            return;
+        }
 
-        StartStep(_currentStepIndex);
+        StartStep(_currentStep);
     }
 
     private TutorialAction CreateTutorialAction(TutorialActionData data)
@@ -88,7 +112,6 @@ public class Tutorial
         return data.actionType switch
         {
             ActionType.Dialog => new TutorialDialog(data),
-            ActionType.WaitTime => new TutorialWaitTime(data),
             ActionType.Touch => new TutorialTouch(data),
             _ => throw new ArgumentException($"Unknown ActionType: {data.actionType}")
         };

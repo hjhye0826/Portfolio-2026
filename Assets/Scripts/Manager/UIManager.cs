@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class UIManager
 {
+    private Transform _root;
     private List<UIView> _viewList = new();
+
+    public void Init()
+    {
+        _root = GameObject.Find("Canvas").transform;
+    }
 
     public T Show<T>() where T : UIView
     {
@@ -31,8 +37,8 @@ public class UIManager
         var ui = _viewList.OfType<T>().FirstOrDefault();
         if (ui != null) return ui;
 
-        var prefab = Resources.Load<T>($"UI/{typeof(T).Name}");
-        var instance = Object.Instantiate(prefab);
+        var prefab = Resources.Load<T>($"Prefabs/UI/{typeof(T).Name}");
+        var instance = Object.Instantiate(prefab, _root);
         _viewList.Add(instance);
 
         return instance;

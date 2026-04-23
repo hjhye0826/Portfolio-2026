@@ -19,5 +19,5 @@ MonoBehaviour:
     _triggerTime: 3
   - _summary: 
     _id: 2
-    _actionGroupId: 200
-    _triggerTime: 8
+    _actionGroupId: 100
+    _triggerTime: 7

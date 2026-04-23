@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b13e22a5c1701949b1b8cceef6d6c88, type: 3}
   m_Name: TutorialActionsSO
   m_EditorClassIdentifier: 
-  _actions: []
+  _actions:
+  - _summary: 
+    _id: 1
+    _groupId: 100
+    _step: 0
+    _actionType: 0
+    _stringValue: "\uD654\uBA74\uC744 \uD074\uB9AD\uD558\uC138\uC694"
+    _floatValue: 0
+    _intValue: 0
+  - _summary: 
+    _id: 2
+    _groupId: 100
+    _step: 0
+    _actionType: 1
+    _stringValue: 
+    _floatValue: 0
+    _intValue: 0

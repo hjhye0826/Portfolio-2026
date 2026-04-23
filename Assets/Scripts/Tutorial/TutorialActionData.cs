@@ -4,7 +4,6 @@ using UnityEngine;
 public enum ActionType
 {
     Dialog,
-    WaitTime,
     Touch,
 }
 

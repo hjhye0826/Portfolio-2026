@@ -1,6 +1,10 @@
+using R3;
+
 public class GameManager
 {
-    public float PlayTime { get; private set; }
+    public ReactiveProperty<float> PlayTime { get; private set; } = new ReactiveProperty<float>();
+    public ReactiveProperty<int> Score { get; private set; } = new ReactiveProperty<int>();
+
     public bool IsPaused { get; private set; }
 
     public void Pause() => IsPaused = true;
@@ -10,6 +14,6 @@ public class GameManager
     {
         if (IsPaused) return;
 
-        PlayTime += deltaTime;
+        PlayTime.Value += deltaTime;
     }
 }

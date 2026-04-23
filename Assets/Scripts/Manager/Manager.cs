@@ -6,6 +6,7 @@ public class Manager : MonoBehaviour
 
     public static UIManager UI { get; private set; }
     public static GameManager Game { get; private set; }
+    public static TutorialManager Tutorial { get; private set; }
 
 
     private void Awake()
@@ -20,7 +21,12 @@ public class Manager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         UI = new UIManager();
+        UI.Init();
+
         Game = new GameManager();
+
+        Tutorial = new TutorialManager();
+        Tutorial.Init();
     }
 
     private void Update()
@@ -28,5 +34,6 @@ public class Manager : MonoBehaviour
         var deltaTime = Time.deltaTime;
 
         Game.Progress(deltaTime);
+        Tutorial.Progress();
     }
 }

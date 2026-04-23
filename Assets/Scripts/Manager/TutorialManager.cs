@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager
 {
     private List<Tutorial> _tutorials = new();
+    private Tutorial CurrentTutorial = null;
 
-    private void Awake()
+    public void Init()
     {
         var tutorialDataSO = Resources.Load<TutorialDataSO>("Data/Tutorial/TutorialDataSO");
         var tutorialActionsSO = Resources.Load<TutorialActionsSO>("Data/Tutorial/TutorialActionsSO");
@@ -16,17 +17,28 @@ public class TutorialManager : MonoBehaviour
             .ToList();
     }
 
-    private void Update()
+    public void Progress()
     {
+        if (CurrentTutorial != null && CurrentTutorial.IsCompleted) 
+        {
+            CurrentTutorial = null;
+        }
+
         foreach (var tutorial in _tutorials)
         {
             if (tutorial.IsCompleted) continue;
+            if (tutorial.ErrorString != "") continue;
 
-            if (!tutorial.IsRunning && Manager.Game.PlayTime >= tutorial.triggerTime)
+            if (!tutorial.IsRunning && Manager.Game.PlayTime.Value >= tutorial.triggerTime)
+            {
+                CurrentTutorial = tutorial;
                 tutorial.StartTutorial();
-
-            if (tutorial.IsRunning)
-                tutorial.Update();
+                break;
+            }
         }
+
+        if (CurrentTutorial == null) return;
+
+        CurrentTutorial.Progress();
     }
 }

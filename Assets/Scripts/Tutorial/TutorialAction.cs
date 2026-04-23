@@ -4,13 +4,20 @@ using UnityEngine;
 [Serializable]
 public abstract class TutorialAction
 {
-    [SerializeField] private string _tutorialDataId;
-
-    public string tutorialDataId => _tutorialDataId;
+    public int TutorialDataId => Data.id;
+    
     public bool IsCompleted { get; private set; }
-    public string errorString { get; protected set; } = "";
+    public string ErrorString { get; protected set; } = "";
+    public TutorialActionData Data { get; private set; }
 
-    public virtual void Start() { }
+    protected TutorialAction(TutorialActionData data)
+    {
+        Data = data;
+        Debug.Log($"Start Tutorial Action : {Data.id}");
+    }
+
+    public virtual void StartAction() {}
+
     public virtual void OnProcess() { }
 
     public virtual void Complete()
