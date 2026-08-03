@@ -37,7 +37,12 @@ public class UIManager
         var ui = _viewList.OfType<T>().FirstOrDefault();
         if (ui != null) return ui;
 
-        var prefab = Resources.Load<T>($"Prefabs/UI/{typeof(T).Name}");
+        var typeName = typeof(T).Name;
+        var underscore = typeName.IndexOf('_');
+        var path = underscore > 0
+            ? $"Prefabs/UI/{typeName.Substring(0, underscore)}/{typeName}"
+            : $"Prefabs/UI/{typeName}";
+        var prefab = Resources.Load<T>(path);
         var instance = Object.Instantiate(prefab, _root);
         _viewList.Add(instance);
 

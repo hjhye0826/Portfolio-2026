@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
     private float _yaw;
     private float _pitch;
     private float _distance;
-    private float _orbitCenterOffsetY; // X, Z는 항상 플레이어 위치 기준
+    private Vector3 _orbitCenterOffset; // 시작 시점 카메라 뷰를 그대로 유지하기 위한 공전 중심 오프셋(플레이어 기준)
 
     // PlayerInput (Send Messages) 에서 채워주는 입력 상태
     private Vector2 _lookDelta;       // 마우스 델타 (프레임당 누적)
@@ -40,15 +40,16 @@ public class CameraController : MonoBehaviour
         }
         _player = playerObj.transform;
 
+        // 에디터(플레이 전)에 세팅된 카메라의 위치·각도를 그대로 유지한다 = 시작해도 '정면'을 그대로 바라봄.
         _yaw = transform.eulerAngles.y;
         var rawPitch = transform.eulerAngles.x;
         _pitch = rawPitch > 180f ? rawPitch - 360f : rawPitch;
 
+        // 카메라가 바라보던 지점을 공전 중심으로 삼아 플레이어를 따라 이동시킨다.
         var toPlayer = _player.position - transform.position;
         _distance = Mathf.Max(Vector3.Dot(toPlayer, transform.forward), 0.1f);
-
         var orbitCenter = transform.position + transform.forward * _distance;
-        _orbitCenterOffsetY = orbitCenter.y - _player.position.y;
+        _orbitCenterOffset = orbitCenter - _player.position;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -68,6 +69,8 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        var isLocked = Manager.Game != null && Manager.Game.IsMovementLocked.Value;
+        if (isLocked) return;
         if (_player == null) return;
 
         HandleZoom();
@@ -81,6 +84,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleZoom()
     {
+        // 상호작용 대상 순환(Multi) 중엔 휠을 대상 선택에 쓰므로 카메라 줌 무시
+        if (InteractionController.IsCycleModeActive) return;
         if (_zoomInput == 0f) return;
 
         // 기존 코드 명세 일치: GetAxis("Mouse ScrollWheel")는 몇 단위이므로 축소 계수 보정
@@ -98,7 +103,7 @@ public class CameraController : MonoBehaviour
     private void ApplyTransform()
     {
         var rotation = Quaternion.Euler(_pitch, _yaw, 0f);
-        var orbitCenter = new Vector3(_player.position.x, _player.position.y + _orbitCenterOffsetY, _player.position.z);
+        var orbitCenter = _player.position + _orbitCenterOffset;
 
         var desiredPosition = orbitCenter + rotation * Vector3.back * _distance;
 

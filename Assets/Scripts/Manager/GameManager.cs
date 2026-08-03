@@ -5,6 +5,7 @@ public class GameManager
 {
     public ReactiveProperty<float> PlayTime { get; private set; } = new ReactiveProperty<float>();
     public ReactiveProperty<int> Score { get; private set; } = new ReactiveProperty<int>();
+    public ReactiveProperty<bool> IsMovementLocked { get; private set; } = new ReactiveProperty<bool>(false);
 
     public Transform Player { get; private set; }
 
@@ -17,6 +18,9 @@ public class GameManager
 
     public void Pause() => IsPaused = true;
     public void Resume() => IsPaused = false;
+
+    public void LockMovement() => IsMovementLocked.Value = true;
+    public void UnlockMovement() => IsMovementLocked.Value = false;
 
     public void Progress(float deltaTime)
     {

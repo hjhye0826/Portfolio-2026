@@ -23,6 +23,7 @@ MonoBehaviour:
         \uC774\uB3D9\uC774 \uAC00\uB2A5\uD569\uB2C8\uB2E4."
       _floatValue: 0
       _intValue: 0
+      _objectKey: {fileID: 0}
   - _groupId: 100
     _completionMode: 1
     _actions:
@@ -32,33 +33,116 @@ MonoBehaviour:
       _stringValue: 
       _floatValue: 0
       _intValue: 0
+      _objectKey: {fileID: 0}
     - _summary: 
       _id: 3
       _actionType: 2
       _stringValue: 
       _floatValue: 3
       _intValue: 0
-  - _groupId: 300
+      _objectKey: {fileID: 0}
+  - _groupId: 200
     _completionMode: 0
     _actions:
     - _summary: 
       _id: 7
       _actionType: 0
-      _stringValue: "\uBC1C\uD310 \uC704\uB85C \uC62C\uB77C\uAC00\uBCF4\uC138\uC694"
+      _stringValue: "\uC0C1\uD638\uC791\uC6A9 \uAC00\uB2A5\uD55C \uBB3C\uCCB4\uB294
+        F\uB85C \uC120\uD0DD \uAC00\uB2A5\uD569\uB2C8\uB2E4."
       _floatValue: 0
       _intValue: 0
+      _objectKey: {fileID: 0}
+  - _groupId: 200
+    _completionMode: 0
+    _actions:
+    - _summary: "TestInteractable\uC744 F\uB85C \uC0C1\uD638\uC791\uC6A9"
+      _id: 8
+      _actionType: 4
+      _stringValue: 
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 11400000, guid: b21474f133ecb8d40aa2f20e8d8a5d13, type: 2}
+  - _groupId: 300
+    _completionMode: 0
+    _actions:
+    - _summary: 
+      _id: 9
+      _actionType: 0
+      _stringValue: "\uBC1C\uD310 \uC704\uC5D0 \uC62C\uB77C\uC11C\uBA74 \uBB38\uC774
+        \uC5F4\uB9BD\uB2C8\uB2E4.\n\uBC1C\uD310\uC744 \uBC1F\uC544 \uBB38\uC744 \uC5F4\uC5B4\uBCF4\uC138\uC694."
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 0}
   - _groupId: 300
     _completionMode: 1
     _actions:
     - _summary: 
-      _id: 8
+      _id: 10
       _actionType: 3
       _stringValue: 
       _floatValue: 0
       _intValue: 0
+      _objectKey: {fileID: 0}
     - _summary: 
-      _id: 9
+      _id: 11
       _actionType: 2
       _stringValue: 
-      _floatValue: 3
+      _floatValue: 4
       _intValue: 0
+      _objectKey: {fileID: 0}
+  - _groupId: 400
+    _completionMode: 0
+    _actions:
+    - _summary: 
+      _id: 12
+      _actionType: 0
+      _stringValue: "\uAC00\uAE4C\uC774 \uC788\uB294 \uBB3C\uCCB4\uB294 F\uB85C \uB4E4\uC5C8\uB2E4
+        \uB193\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 0}
+  - _groupId: 400
+    _completionMode: 1
+    _actions:
+    - _summary: 
+      _id: 13
+      _actionType: 3
+      _stringValue: 
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 0}
+    - _summary: 
+      _id: 14
+      _actionType: 2
+      _stringValue: 
+      _floatValue: 5
+      _intValue: 0
+      _objectKey: {fileID: 0}
+  - _groupId: 500
+    _completionMode: 0
+    _actions:
+    - _summary: 
+      _id: 15
+      _actionType: 0
+      _stringValue: "\uBB3C\uCCB4\uB97C \uBC1C\uD310 \uC704\uC5D0 \uC62C\uB824\n\uBB38\uC744
+        \uC5F4\uC5B4\uBCF4\uC138\uC694."
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 0}
+  - _groupId: 500
+    _completionMode: 1
+    _actions:
+    - _summary: 
+      _id: 16
+      _actionType: 3
+      _stringValue: 
+      _floatValue: 0
+      _intValue: 0
+      _objectKey: {fileID: 0}
+    - _summary: 
+      _id: 17
+      _actionType: 2
+      _stringValue: 
+      _floatValue: 5
+      _intValue: 0
+      _objectKey: {fileID: 0}

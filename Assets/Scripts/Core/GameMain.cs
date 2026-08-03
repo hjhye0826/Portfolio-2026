@@ -18,6 +18,11 @@ public class GameMain : MonoSingleton<GameMain>
         Manager.Initialize();
     }
 
+    private void Start()
+    {
+        Manager.UI.Show<Panel_HUD>();
+    }
+
     private void Update()
     {
         Manager.Progress(Time.deltaTime);

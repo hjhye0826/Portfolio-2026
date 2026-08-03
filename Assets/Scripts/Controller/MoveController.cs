@@ -45,8 +45,11 @@ public class MoveController : MonoBehaviour
 
     private void Update()
     {
-        var dx = _moveInput.x;
-        var dz = _moveInput.y;
+        var isLocked = Manager.Game != null && Manager.Game.IsMovementLocked.Value;
+        var dx = isLocked ? 0f : _moveInput.x;
+        var dz = isLocked ? 0f : _moveInput.y;
+        if (isLocked)
+            _jumpPressed = false;
 
         // 카메라 기준 수평 방향 벡터 (Y축 제거)
         var camForward = mainCamera.transform.forward;

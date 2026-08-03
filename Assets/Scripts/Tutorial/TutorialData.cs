@@ -16,12 +16,14 @@ public class TutorialData
     [SerializeField] private ConditionType _conditionType;
     [SerializeField] private float _triggerTime;
     [SerializeField] private float _range;
-    [SerializeField] private string _targetName;
+    [SerializeField] private ObjectKey _targetKey;
+    [SerializeField] private bool _blockMovement = false;
 
     public int Id => _id;
     public int ActionGroupId => _actionGroupId;
     public ConditionType ConditionType => _conditionType;
     public float TriggerTime => _triggerTime;
     public float Range => _range;
-    public string TargetName => _targetName;
+    public ObjectKey TargetKey => _targetKey;
+    public bool BlockMovement => _blockMovement;
 }

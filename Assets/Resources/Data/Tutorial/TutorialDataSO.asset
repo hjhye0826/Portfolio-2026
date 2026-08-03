@@ -13,17 +13,43 @@ MonoBehaviour:
   m_Name: TutorialDataSO
   m_EditorClassIdentifier: 
   _tutorials:
-  - _summary: 
+  - _summary: "\uCE90\uB9AD\uD130 \uC774\uB3D9 \uD29C\uD1A0\uB9AC\uC5BC"
     _id: 1
     _actionGroupId: 100
     _conditionType: 0
     _triggerTime: 1
     _range: 0
-    _targetName: 
-  - _summary: 
+    _targetKey: {fileID: 0}
+    _blockMovement: 0
+  - _summary: "\uC0C1\uD638\uC791\uC6A9 \uD29C\uD1A0\uB9AC\uC5BC"
+    _id: 2
+    _actionGroupId: 200
+    _conditionType: 1
+    _triggerTime: 0
+    _range: 2.5
+    _targetKey: {fileID: 11400000, guid: b21474f133ecb8d40aa2f20e8d8a5d13, type: 2}
+    _blockMovement: 0
+  - _summary: "\uBC1C\uD310 \uD29C\uD1A0\uB9AC\uC5BC(1\uBC88\uBC29)"
     _id: 3
     _actionGroupId: 300
     _conditionType: 1
     _triggerTime: 0
-    _range: 5
-    _targetName: PressurePlate
+    _range: 3
+    _targetKey: {fileID: 11400000, guid: 39d13ecd9324d824cb888722af64ee80, type: 2}
+    _blockMovement: 0
+  - _summary: "\uBE14\uB7ED F \uC548\uB0B4(2\uBC88\uBC29)"
+    _id: 4
+    _actionGroupId: 400
+    _conditionType: 1
+    _triggerTime: 0
+    _range: 3
+    _targetKey: {fileID: 11400000, guid: 91106db58cb98ab4ea448a8c2e3f7f04, type: 2}
+    _blockMovement: 0
+  - _summary: "\uBE14\uB7ED \uBC1C\uD310 \uC548\uB0B4(2\uBC88\uBC29)"
+    _id: 5
+    _actionGroupId: 500
+    _conditionType: 1
+    _triggerTime: 0
+    _range: 3
+    _targetKey: {fileID: 11400000, guid: 91106db58cb98ab4ea448a8c2e3f7f04, type: 2}
+    _blockMovement: 0

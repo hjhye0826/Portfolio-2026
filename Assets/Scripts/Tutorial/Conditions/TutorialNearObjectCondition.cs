@@ -2,24 +2,23 @@ using UnityEngine;
 
 public class TutorialNearObjectCondition : ITutorialCondition
 {
-    private readonly string _targetName;
+    private readonly ObjectKey _targetKey;
     private readonly float _range;
-    private Transform _target;
 
-    public TutorialNearObjectCondition(string targetName, float range)
+    public TutorialNearObjectCondition(ObjectKey targetKey, float range)
     {
-        _targetName = targetName;
+        _targetKey = targetKey;
         _range = range;
     }
 
     public bool Evaluate()
     {
-        _target ??= GameObject.Find(_targetName)?.transform;
-        if (_target == null)
-        {
-            return false;
-        }
+        if (Manager.Game == null || Manager.Game.Player == null) return false;
 
-        return Vector3.Distance(Manager.Game.Player.position, _target.position) <= _range;
+        var playerPos = Manager.Game.Player.position;
+        var nearest = ObjectRegistry.GetNearest(_targetKey, playerPos);
+        if (nearest == null) return false;
+
+        return Vector3.Distance(playerPos, nearest.transform.position) <= _range;
     }
 }

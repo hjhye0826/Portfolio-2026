@@ -23,7 +23,7 @@ public class Tutorial
         _condition = data.ConditionType switch
         {
             ConditionType.Time       => new TutorialTimeCondition(data.TriggerTime),
-            ConditionType.NearObject => new TutorialNearObjectCondition(data.TargetName, data.Range),
+            ConditionType.NearObject => new TutorialNearObjectCondition(data.TargetKey, data.Range),
             _                        => throw new ArgumentException($"Unknown ConditionType: {data.ConditionType}")
         };
 
@@ -35,6 +35,8 @@ public class Tutorial
     public void StartTutorial()
     {
         Manager.Game.Pause();
+        if (Data.BlockMovement)
+            Manager.Game.LockMovement();
         Manager.UI.Show<Popup_Tutorial>();
 
         IsRunning = true;
@@ -55,6 +57,7 @@ public class Tutorial
         IsRunning = false;
 
         Manager.Game.Resume();
+        Manager.Game.UnlockMovement();
         Manager.UI.Hide<Popup_Tutorial>();
     }
 
@@ -135,6 +138,7 @@ public class Tutorial
             ActionType.HideDialog => new TutorialHideDialog(data),
             ActionType.WaitTime   => new TutorialWaitTime(data),
             ActionType.Touch      => new TutorialTouch(data),
+            ActionType.Interact   => new TutorialInteract(data),
             _ => throw new ArgumentException($"Unknown ActionType: {data.ActionType}")
         };
     }

@@ -9,7 +9,17 @@ public class InteractionController : MonoBehaviour
     private const int OverlapBufferSize = 20;
 
     [SerializeField] private float _detectionRadius = 3f;
-    //[SerializeField] private UIGroup_InteractionSelection _selectionUI;
+    private UIGroup_InteractionSelection _selectionUI;
+
+    private UIGroup_InteractionSelection SelectionUI
+    {
+        get
+        {
+            if (_selectionUI == null && Manager.UI != null)
+                _selectionUI = Manager.UI.Show<Panel_HUD>()?.InteractionSelection;
+            return _selectionUI;
+        }
+    }
 
     private LayerMask _interactableLayer;
 
@@ -19,6 +29,8 @@ public class InteractionController : MonoBehaviour
     private int _currentIndex;
     private InteractionState _state;
 
+    public static bool IsCycleModeActive { get; private set; }
+
     // PlayerInput (Send Messages) 에서 채워주는 입력 상태
     private float _cycleInput;        // 한 프레임 동안 누적된 휠 값
     private bool _interactPressed;    // 단발성 F 입력
@@ -26,6 +38,7 @@ public class InteractionController : MonoBehaviour
     private void Awake()
     {
         _interactableLayer = LayerMask.GetMask("Interactable");
+        IsCycleModeActive = false;
     }
 
     // PlayerInput 메시지 콜백: Player 액션맵의 "CycleTarget" 액션 (마우스 휠)
@@ -58,8 +71,8 @@ public class InteractionController : MonoBehaviour
         var results = new List<InteractableBase>();
         for (var i = 0; i < count; i++)
         {
-            //if (_overlapBuffer[i].TryGetComponent<InteractableBase>(out var interactable) && interactable.CanInteract)
-            //    results.Add(interactable);
+            if (_overlapBuffer[i].TryGetComponent<InteractableBase>(out var interactable) && interactable.CanInteract)
+                results.Add(interactable);
         }
         return results;
     }
@@ -117,7 +130,7 @@ public class InteractionController : MonoBehaviour
         //if (_currentTarget is IFocusable newFocusable)
         //    newFocusable.OnFocus();
 
-        //_selectionUI?.Refresh(_currentIndex);
+        SelectionUI?.Refresh(_currentIndex);
     }
 
     private void HandleWheel()
@@ -133,9 +146,10 @@ public class InteractionController : MonoBehaviour
     private void HandleInteract()
     {
         if (false == _interactPressed) return;
-        //if (_currentTarget == null || !_currentTarget.CanInteract) return;
+        if (_currentTarget == null || !_currentTarget.CanInteract) return;
 
-        //_currentTarget.OnInteract(gameObject);
+        _currentTarget.OnInteract(gameObject);
+        InteractionSignals.Interacted.OnNext(_currentTarget);
     }
 
     private void UpdateState()
@@ -147,14 +161,16 @@ public class InteractionController : MonoBehaviour
             _ => InteractionState.Multi,
         };
 
+        IsCycleModeActive = _state == InteractionState.Multi;
+
         switch (_state)
         {
             case InteractionState.None:
-            case InteractionState.Single:
-                //_selectionUI?.Hide();
+                SelectionUI?.Hide();
                 break;
+            case InteractionState.Single:
             case InteractionState.Multi:
-                //_selectionUI?.Show(_candidates);
+                SelectionUI?.Show(_candidates);
                 break;
         }
     }
