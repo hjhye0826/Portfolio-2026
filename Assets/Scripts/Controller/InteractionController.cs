@@ -26,6 +26,7 @@ public class InteractionController : MonoBehaviour
     private readonly Collider[] _overlapBuffer = new Collider[OverlapBufferSize];
     private readonly List<InteractableBase> _candidates = new();
     private InteractableBase _currentTarget;
+    private CarryableBlock _carriedBlock;
     private int _currentIndex;
     private InteractionState _state;
 
@@ -72,7 +73,12 @@ public class InteractionController : MonoBehaviour
         for (var i = 0; i < count; i++)
         {
             if (_overlapBuffer[i].TryGetComponent<InteractableBase>(out var interactable) && interactable.CanInteract)
+            {
+                // 이미 들고 있는 블럭은 상호작용 후보(및 UI)에서 제외한다.
+                if (interactable is CarryableBlock carryable && carryable.IsCarried)
+                    continue;
                 results.Add(interactable);
+            }
         }
         return results;
     }
@@ -146,10 +152,25 @@ public class InteractionController : MonoBehaviour
     private void HandleInteract()
     {
         if (false == _interactPressed) return;
+
+        // 블럭을 들고 있는 동안에는 F가 항상 내려놓기로 동작한다.
+        // (들고 있는 블럭은 상호작용 후보에서 빠지므로 여기서 직접 처리한다.)
+        if (_carriedBlock != null && _carriedBlock.IsCarried)
+        {
+            _carriedBlock.OnInteract(gameObject);
+            InteractionSignals.Interacted.OnNext(_carriedBlock);
+            _carriedBlock = null;
+            return;
+        }
+
         if (_currentTarget == null || !_currentTarget.CanInteract) return;
 
         _currentTarget.OnInteract(gameObject);
         InteractionSignals.Interacted.OnNext(_currentTarget);
+
+        // 방금 집어든 블럭을 기억해 두었다가 다음 F 입력 때 내려놓는다.
+        if (_currentTarget is CarryableBlock carryable && carryable.IsCarried)
+            _carriedBlock = carryable;
     }
 
     private void UpdateState()

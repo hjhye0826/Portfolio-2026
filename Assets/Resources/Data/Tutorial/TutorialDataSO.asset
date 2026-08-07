@@ -26,7 +26,7 @@ MonoBehaviour:
     _actionGroupId: 200
     _conditionType: 1
     _triggerTime: 0
-    _range: 2.5
+    _range: 3
     _targetKey: {fileID: 11400000, guid: b21474f133ecb8d40aa2f20e8d8a5d13, type: 2}
     _blockMovement: 0
   - _summary: "\uBC1C\uD310 \uD29C\uD1A0\uB9AC\uC5BC(1\uBC88\uBC29)"

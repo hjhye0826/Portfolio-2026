@@ -21,8 +21,8 @@ public class Lever : InteractableBase
         var targets = ObjectRegistry.GetAll(_targetKey);
         for (int i = 0; i < targets.Count; i++)
         {
-            if (targets[i] is Door door)
-                door.Toggle();
+            if (targets[i] is IToggleable toggleable)
+                toggleable.Toggle();
         }
 
         if (_handle != null)

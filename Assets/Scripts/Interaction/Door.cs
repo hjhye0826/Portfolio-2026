@@ -7,7 +7,7 @@ using UnityEngine;
 /// 레지스트리에만 등록되어 레버 등이 키로 찾아 연다.
 /// 이 컴포넌트가 붙은 Transform(힌지)을 회전시켜 여닫는다.
 /// </summary>
-public class Door : InteractableBase
+public class Door : InteractableBase, IToggleable
 {
     [SerializeField] private float _openAngle = -90f;   // 열렸을 때 힌지 Y 회전량(도)
     [SerializeField] private float _speed = 240f;       // 회전 속도(도/초)
