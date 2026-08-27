@@ -10,6 +10,7 @@ public static class Manager
 {
     public static UIManager UI { get; private set; }
     public static GameManager Game { get; private set; }
+    public static RoomManager Room { get; private set; }
     public static TutorialManager Tutorial { get; private set; }
 
 
@@ -20,6 +21,9 @@ public static class Manager
 
         Game = new GameManager();
         Game.Init();
+
+        Room = new RoomManager();
+        Room.Init();
 
         Tutorial = new TutorialManager();
         Tutorial.Init();

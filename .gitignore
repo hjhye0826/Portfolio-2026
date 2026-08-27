@@ -39,3 +39,4 @@ Thumbs.db
 # Backup 파일
 *.bak
 *.tmp
+/Assets/Screenshots
